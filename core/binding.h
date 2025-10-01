@@ -34,7 +34,18 @@ Router::Handler make_handler(Func f)
 {
     return [f](const Request &req, const Router::Values &values) -> Response
     {
-        return call_with_params<Func, Params...>(
-            f, req, values, std::index_sequence_for<Params...>{});
+        try
+        {
+            return call_with_params<Func, Params...>(
+                f, req, values, std::index_sequence_for<Params...>{});
+        }
+        catch (const std::exception &e)
+        {
+            return Response(std::string("Validation Error: ") + e.what(), "text/plain");
+        }
+        catch (...)
+        {
+            return Response("Unknown Error", "text/plain");
+        }
     };
 }
