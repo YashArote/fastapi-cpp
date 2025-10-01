@@ -5,7 +5,7 @@
 
 using json = nlohmann::json;
 
-class SingleServer {
+class FastApiCpp {
 public:
     static void run(Router& app, const std::string& host, int port) {
         httplib::Server svr;
