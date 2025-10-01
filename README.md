@@ -64,9 +64,7 @@ struct UserModel : public Validatable {
 };
 
 Response create_user(UserModel user) {
-    if (auto err = user.validate())
-        return Response("Validation Error: " + *err, "text/plain");
-
+    user.validate();
     return Response(json{{"name", user.name}, {"age", user.age}});
 }
 
