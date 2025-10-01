@@ -1,0 +1,165 @@
+# FastAPI-CPP 🚀
+
+A modern, FastAPI-inspired web framework for **C++20**, built on top of [cpp-httplib](https://github.com/yhirose/cpp-httplib) and [nlohmann/json](https://github.com/nlohmann/json).  
+
+Write clean, type-safe, and declarative APIs in C++ with path params, request body models, and automatic JSON serialization.
+
+---
+
+## ✨ Features
+
+- FastAPI-style routing
+- Path parameters
+- Request body models with validation
+- Automatic JSON serialization
+- Simple response handling
+- Centralized server runner
+- Extensible validation layer
+- Supports all HTTP methods: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
+
+---
+
+## 📦 Installation
+
+Clone the repo and add `include/` to your project’s include path:
+
+```bash
+g++ -std=c++20 main.cpp -Iinclude -o app -lws2_32   # Windows
+g++ -std=c++20 main.cpp -Iinclude -o app             # Linux / macOS
+```
+
+Then in your code:
+
+```cpp
+#include "fastapi_cpp.h"
+```
+
+---
+
+## 🚀 Quick Start
+
+### GET route
+
+```cpp
+Response read_item(int item_id) {
+    return Response(json{{"item_id", item_id}});
+}
+
+APP_GET("/items/{item_id}", read_item, Path<int>);
+```
+
+### POST route with model
+
+```cpp
+struct UserModel : public Validatable {
+    std::string name;
+    int age;
+    MODEL(UserModel, name, age);
+
+    std::optional<std::string> validate() const override {
+        if (name.empty()) return "Name cannot be empty";
+        if (age < 0) return "Age must be non-negative";
+        return std::nullopt;
+    }
+};
+
+Response create_user(UserModel user) {
+    if (auto err = user.validate())
+        return Response("Validation Error: " + *err, "text/plain");
+
+    return Response(json{{"name", user.name}, {"age", user.age}});
+}
+
+APP_POST("/users", create_user, Body<UserModel>);
+```
+
+### HTML response
+
+```cpp
+Response serve_html() {
+    return Response("<h1>Hello, World!</h1>", "text/html");
+}
+
+APP_GET("/hello", serve_html);
+```
+
+### DELETE route
+
+```cpp
+Response delete_user(int id) {
+    return Response("Deleted user " + std::to_string(id), "text/plain");
+}
+
+APP_DELETE("/users/{id}", delete_user, Path<int>);
+```
+
+---
+
+## 📝 Full Example
+
+```cpp
+#include "fastapi_cpp.h"
+
+Router app;
+
+struct UserModel : public Validatable {
+    std::string name;
+    int age;
+    MODEL(UserModel, name, age);
+
+    std::optional<std::string> validate() const override {
+        if (name.empty()) return "Name cannot be empty";
+        if (age < 0) return "Age must be non-negative";
+        return std::nullopt;
+    }
+};
+
+Response read_item(int item_id) {
+    return Response(json{{"item_id", item_id}});
+}
+
+Response read_user(std::string name, int id) {
+    return Response(json{{"name", name}, {"id", id}});
+}
+
+Response create_user(UserModel user) {
+    if (auto err = user.validate())
+        return Response("Validation Error: " + *err, "text/plain");
+    return Response(json{{"name", user.name}, {"age", user.age}});
+}
+
+Response update_user(int id, UserModel user) {
+    if (auto err = user.validate())
+        return Response("Validation Error: " + *err, "text/plain");
+    return Response(json{{"id", id}, {"name", user.name}, {"age", user.age}});
+}
+
+Response delete_user(int id) {
+    return Response("Deleted user " + std::to_string(id), "text/plain");
+}
+
+int main() {
+    APP_GET("/items/{item_id}", read_item, Path<int>);
+    APP_GET("/users/{name}/{id}", read_user, Path<std::string>, Path<int>);
+    APP_POST("/users", create_user, Body<UserModel>);
+    APP_PUT("/users/{id}", update_user, Path<int>, Body<UserModel>);
+    APP_DELETE("/users/{id}", delete_user, Path<int>);
+
+    run(app, "127.0.0.1", 9006);
+}
+```
+
+---
+
+## 🙏 Acknowledgements
+
+This project builds on:
+
+- [cpp-httplib](https://github.com/yhirose/cpp-httplib)
+- [nlohmann/json](https://github.com/nlohmann/json)
+
+---
+
+## 📜 License
+
+MIT License © 2025 FastAPI-CPP contributors
