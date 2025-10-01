@@ -1,4 +1,6 @@
 # FastAPI-CPP 🚀
+<img width="250" height="250" alt="fastapi-cpp" src="https://github.com/user-attachments/assets/6ba2212a-84ee-4df5-8d1e-c66b6d494cb2" />
+
 
 A modern, FastAPI-inspired web framework for **C++17** and above, built on top of [cpp-httplib](https://github.com/yhirose/cpp-httplib) and [nlohmann/json](https://github.com/nlohmann/json). 
 
