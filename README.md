@@ -53,20 +53,13 @@ APP_GET("/items/{item_id}", read_item, Path<int>);
 ### POST route with model
 
 ```cpp
-struct UserModel : public Validatable {
+struct UserModel {
     std::string name;
     int age;
     MODEL(UserModel, name, age);
-
-    std::optional<std::string> validate() const override {
-        if (name.empty()) return "Name cannot be empty";
-        if (age < 0) return "Age must be non-negative";
-        return std::nullopt;
-    }
 };
 
 Response create_user(UserModel user) {
-    user.validate();
     return Response(json{{"name", user.name}, {"age", user.age}});
 }
 
@@ -107,10 +100,9 @@ struct UserModel : public Validatable {
     int age;
     MODEL(UserModel, name, age);
 
-    std::optional<std::string> validate() const override {
-        if (name.empty()) return "Name cannot be empty";
-        if (age < 0) return "Age must be non-negative";
-        return std::nullopt;
+    void validate() const override {
+        if (name.empty()) throw std::runtime_error("Name cannot be empty");
+        if (age < 0) throw std::runtime_error("Age must be non-negative");
     }
 };
 
@@ -123,14 +115,12 @@ Response read_user(std::string name, int id) {
 }
 
 Response create_user(UserModel user) {
-    if (auto err = user.validate())
-        return Response("Validation Error: " + *err, "text/plain");
+    user.validate()
     return Response(json{{"name", user.name}, {"age", user.age}});
 }
 
 Response update_user(int id, UserModel user) {
-    if (auto err = user.validate())
-        return Response("Validation Error: " + *err, "text/plain");
+    user.validate()
     return Response(json{{"id", id}, {"name", user.name}, {"age", user.age}});
 }
 
