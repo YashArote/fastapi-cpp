@@ -5,17 +5,24 @@
 
 using json = nlohmann::json;
 
-class FastApiCpp {
+class FastApiCpp
+{
 public:
-    static void run(Router& app, const std::string& host, int port) {
+    static void run(Router &app, const std::string &host, int port)
+    {
         httplib::Server svr;
 
-        auto handle_request = [&](const httplib::Request& req, httplib::Response& res) {
+        auto handle_request = [&](const httplib::Request &req, httplib::Response &res)
+        {
             std::optional<json> parsed;
-            if (!req.body.empty()) {
-                try {
+            if (!req.body.empty())
+            {
+                try
+                {
                     parsed = json::parse(req.body);
-                } catch (...) {
+                }
+                catch (...)
+                {
                     res.status = 400;
                     res.set_content("{\"error\":\"Invalid JSON\"}", "application/json");
                     return;
@@ -33,7 +40,7 @@ public:
         svr.Delete(R"(.*)", handle_request);
         svr.Options(R"(.*)", handle_request);
 
-        std::cout << "🚀 Server running at http://" << host << ":" << port << "\n";
+        std::cout << "Server running at http://" << host << ":" << port << "\n";
         svr.listen(host, port);
     }
 };
