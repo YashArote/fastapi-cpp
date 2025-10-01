@@ -1,6 +1,6 @@
 # FastAPI-CPP 🚀
 
-A modern, FastAPI-inspired web framework for **C++20**, built on top of [cpp-httplib](https://github.com/yhirose/cpp-httplib) and [nlohmann/json](https://github.com/nlohmann/json).  
+A modern, FastAPI-inspired web framework for **C++17** and above, built on top of [cpp-httplib](https://github.com/yhirose/cpp-httplib) and [nlohmann/json](https://github.com/nlohmann/json). 
 
 Write clean, type-safe, and declarative APIs in C++ with path params, request body models, and automatic JSON serialization.
 
@@ -24,8 +24,8 @@ Write clean, type-safe, and declarative APIs in C++ with path params, request bo
 Clone the repo and add `include/` to your project’s include path:
 
 ```bash
-g++ -std=c++20 main.cpp -Iinclude -o app -lws2_32   # Windows
-g++ -std=c++20 main.cpp -Iinclude -o app             # Linux / macOS
+g++ -std=c++17 main.cpp -Iinclude -o app -lws2_32   # Windows
+g++ -std=c++17 main.cpp -Iinclude -o app             # Linux / macOS
 ```
 
 Then in your code:
