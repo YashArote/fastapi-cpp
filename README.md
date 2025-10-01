@@ -158,6 +158,3 @@ This project builds on:
 
 ---
 
-## 📜 License
-
-MIT License © 2025 FastAPI-CPP contributors
