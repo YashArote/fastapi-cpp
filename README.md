@@ -143,7 +143,7 @@ int main() {
     APP_PUT("/users/{id}", update_user, Path<int>, Body<UserModel>);
     APP_DELETE("/users/{id}", delete_user, Path<int>);
 
-    run(app, "127.0.0.1", 9006);
+    FastApiCpp::run(app, "127.0.0.1", 8080);
 }
 ```
 
