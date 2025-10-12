@@ -1,0 +1,265 @@
+# C++ Build Artifacts
+# ===================
+
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Libraries
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# Build directories
+build/
+build_*/
+cmake-build-*/
+out/
+bin/
+lib/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Make
+*.make
+Makefile.in
+*.deps
+*.d
+
+# Autotools
+.deps/
+.libs/
+*.la
+*.lai
+config.log
+config.status
+configure
+autom4te.cache/
+
+# IDE and Editor Files
+# ====================
+
+# Visual Studio / Visual Studio Code
+.vscode/
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+
+# Code::Blocks
+*.cbp
+*.layout
+*.depend
+
+# Dev-C++
+*.dev
+
+# Eclipse CDT
+.project
+.cproject
+.settings/
+
+# KDevelop
+.kdev4/
+*.kdev4
+
+# Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+project.xcworkspace/
+
+# System Files
+# ============
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Temporary Files
+# ===============
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+*.temp
+*~
+
+# Log files
+*.log
+*.tlog
+
+# Core dumps
+core
+core.*
+
+# Profiling
+*.prof
+*.gcov
+*.gcda
+*.gcno
+
+# Coverage
+*.info
+coverage/
+htmlcov/
+
+# Package Managers
+# ================
+
+# Conan
+conandata.yml
+conanfile.txt
+conaninfo.txt
+conanbuildinfo.*
+
+# vcpkg
+vcpkg_installed/
+
+# Hunter
+_hunter/
+
+# Dependencies
+# ============
+
+# Third-party libraries
+third_party/
+external/
+deps/
+dependencies/
+
+# Package files
+*.tar.gz
+*.tar.bz2
+*.zip
+*.rar
+*.7z
+
+# Documentation
+# =============
+
+# Generated documentation
+docs/html/
+docs/latex/
+docs/xml/
+Doxyfile.bak
+
+# Testing
+# =======
+
+# Test results
+test_results/
+*.test
+test_*
+
+# Benchmark results
+benchmark_results/
+*.benchmark
+
+# Custom Project Files
+# ===================
+
+# FastAPI-C++ specific
+# Add any project-specific files here
+*.orig
+*.rej
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration files with sensitive data
+config.ini
+settings.json
+secrets.json

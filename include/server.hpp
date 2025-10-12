@@ -1,7 +1,7 @@
 #pragma once
-#include "httplib.h"
-#include "router.h"
-#include "json.hpp"
+#include "../include/httplib.hpp"
+#include "../include/router.hpp"
+#include "../include/nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
@@ -11,7 +11,6 @@ public:
     static void run(Router &app, const std::string &host, int port)
     {
         httplib::Server svr;
-
         auto handle_request = [&](const httplib::Request &req, httplib::Response &res)
         {
             std::optional<json> parsed;
@@ -28,7 +27,6 @@ public:
                     return;
                 }
             }
-
             Response app_res = app.handle_request(req.method, req.path, parsed);
             res.set_content(app_res.dump(), app_res.content_type);
         };
