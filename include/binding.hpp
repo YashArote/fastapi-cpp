@@ -1,7 +1,7 @@
 #pragma once
-#include "params.h"
-#include "router.h"
-#include "request.h"
+#include "../include/params.hpp"
+#include "../include/router.hpp"
+#include "../include/request.hpp"
 
 template <typename Param>
 auto resolve_arg(const Request &req, const Router::Values &values, size_t index)
@@ -10,21 +10,18 @@ auto resolve_arg(const Request &req, const Router::Values &values, size_t index)
 
     if constexpr (std::is_same_v<Param, Path<T>>)
     {
-        return parse_param<T>(values[index]); // return raw T
+        return parse_param<T>(values[index]);
     }
     else if constexpr (std::is_same_v<Param, Body<T>>)
     {
         if (!req.json_body)
             throw std::runtime_error("Missing JSON body");
-        return req.json_body->get<T>(); // validated via model
+        return req.json_body->get<T>();
     }
 }
 
 template <typename Func, typename... Params, std::size_t... I>
-Response call_with_params(Func f,
-                          const Request &req,
-                          const Router::Values &values,
-                          std::index_sequence<I...>)
+Response call_with_params(Func f, const Request &req, const Router::Values &values, std::index_sequence<I...>)
 {
     return f(resolve_arg<Params>(req, values, I)...);
 }
