@@ -28,7 +28,7 @@ cmake-build-*/
 out/
 bin/
 lib/
-
+FastApi-Cpp.code-workspace
 # CMake
 CMakeCache.txt
 CMakeFiles/
