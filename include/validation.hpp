@@ -1,5 +1,5 @@
 #pragma once
-#include "../include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 
 #define MODEL(Type, ...) \
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(Type, __VA_ARGS__)

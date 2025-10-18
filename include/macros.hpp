@@ -1,5 +1,5 @@
 #pragma once
-#include "../include/binding.hpp"
+#include "binding.hpp"
 
 #define APP_GET(path, func, ...) \
     app.add_route("GET", path, make_handler<__VA_ARGS__>(func))

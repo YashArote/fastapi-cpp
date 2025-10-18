@@ -1,7 +1,7 @@
 #pragma once
-#include "../include/params.hpp"
-#include "../include/router.hpp"
-#include "../include/request.hpp"
+#include "params.hpp"
+#include "router.hpp"
+#include "request.hpp"
 
 template <typename Param>
 auto resolve_arg(const Request &req, const Router::Values &values, size_t index)

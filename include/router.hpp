@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include "../include/request.hpp"
-#include "../include/response.hpp"
+#include "request.hpp"
+#include "response.hpp"
 
 class Router {
 public:

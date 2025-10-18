@@ -1,7 +1,7 @@
 #pragma once
-#include "../include/httplib.hpp"
-#include "../include/router.hpp"
-#include "../include/nlohmann/json.hpp"
+#include "httplib.hpp"
+#include "router.hpp"
+#include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 

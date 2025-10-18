@@ -39,13 +39,14 @@ set_target_properties(fastapi-cpp PROPERTIES
 
 # Create examples directory
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-
-# Test server executable
-add_executable(test_server examples/test_server.cpp)
-target_link_libraries(test_server fastapi-cpp pthread)
-
+target_include_directories(fastapi-cpp PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+     $<INSTALL_INTERFACE:include/fastapi-cpp> 
+)
 # Installation
 install(TARGETS fastapi-cpp
+    EXPORT FastAPI-CPPTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
@@ -53,7 +54,6 @@ install(TARGETS fastapi-cpp
 )
 
 install(DIRECTORY include/ DESTINATION include/fastapi-cpp)
-
 # Package configuration
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
@@ -67,19 +67,15 @@ configure_package_config_file(
     "${CMAKE_CURRENT_BINARY_DIR}/FastAPI-CPPConfig.cmake"
     INSTALL_DESTINATION lib/cmake/FastAPI-CPP
 )
-
+install(EXPORT FastAPI-CPPTargets
+    FILE FastAPI-CPPTargets.cmake
+    NAMESPACE FastAPI_CPP::
+    DESTINATION lib/cmake/FastAPI-CPP
+)
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/FastAPI-CPPConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/FastAPI-CPPConfigVersion.cmake"
     DESTINATION lib/cmake/FastAPI-CPP
-)
-
-# Custom targets
-add_custom_target(run_test_server
-    COMMAND test_server
-    DEPENDS test_server
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Running test server"
 )
 
 # Print build information

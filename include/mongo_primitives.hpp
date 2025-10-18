@@ -1,6 +1,6 @@
 #pragma once
-#include "../include/db_config.hpp"
-#include "../include/nlohmann/json.hpp"
+#include "db_config.hpp"
+#include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
