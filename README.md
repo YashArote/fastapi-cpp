@@ -19,124 +19,73 @@ Write clean, type-safe, and declarative APIs in C++ with path params, request bo
 - Supports all HTTP methods: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
 
 ---
+# 🛠️ Installation & Integration Guide (FastAPI-CPP)
 
-## 🛠️ Build System Overview
+## 1. Clone the Repository
 
-FastAPI-C++ includes a comprehensive build system supporting multiple build and run methods.  
-You can use **Make**, **CMake**, or provided **build scripts** to compile and run the examples.
-
-### 📁 Build System Files
-
-1. **`Makefile`** — Traditional Make-based build system  
-2. **`CMakeLists.txt`** — Modern CMake build system  
-3. **`build.sh` / `build.bat`** — Cross-platform build scripts  
-4. **`dev.sh`** — Development helper script  
-5. **`BUILD.md`** — Comprehensive build documentation  
-
-### 🚀 Example Applications
-- `examples/test_server.cpp` — Comprehensive test server demonstrating all features  
-- `examples/simple_example.cpp` — Minimal example for quick start  
-
----
-
-## ⚡ Quick Build & Run
-
-### Option 1: Using Build Script (Recommended)
 ```bash
-chmod +x build.sh
-./build.sh run
-```
-
-### Option 2: Using Make Directly
-```bash
-make all
-make run
-make run-simple
-make clean
-```
-
-### Option 3: Using CMake
-```bash
-mkdir build_cmake && cd build_cmake
-cmake ..
-make -j$(nproc)
-./test_server
+git clone https://github.com/YashArote/fastapi-cpp.git
+cd fastapi-cpp
 ```
 
 ---
 
-## 🌐 Example Endpoints
+## 2. Build the Library
 
-The test server provides ready-to-use endpoints:
+You can build the project in **Debug** or **Release** mode using CMake.
 
-### User Management
-- `GET /users`
-- `POST /users`
-- `GET /users/{id}`
-- `PUT /users/{id}`
-- `DELETE /users/{id}`
 
-### Product Management
-- `GET /products`
-- `POST /products`
-- `GET /products/{id}`
-- `PUT /products/{id}`
-- `DELETE /products/{id}`
-
-### System Endpoints
-- `GET /` — Server info  
-- `GET /health` — Health check  
-- `GET /stats` — Server statistics  
-- `GET /demo` — Interactive demo page  
-
----
-
-## 🧪 Testing the API
-
-### Using curl
-```bash
-curl http://127.0.0.1:8080/health
-curl -X POST http://127.0.0.1:8080/users -H "Content-Type: application/json" -d '{"name":"John Doe","age":30}'
-curl http://127.0.0.1:8080/users
+```powershell
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . --config Release
 ```
 
-### Using Test Script
+This will create the static library and include directory.
+---
+
+## 3. Install the Library Globally
+
+You can install it system-wide (e.g., `/usr/local` on Linux/macOS or `C:/Program Files` on Windows).
+
+**Cross-Platform Installation:**
 ```bash
-./build.sh test
+cmake --install .
 ```
 
-### Interactive Demo
-Visit [http://127.0.0.1:8080/demo](http://127.0.0.1:8080/demo)
-
----
-
-## 📋 Make Targets
-
-- `make all` — Build library and examples  
-- `make run` — Run comprehensive test server  
-- `make run-simple` — Run minimal example  
-- `make clean` — Clean build artifacts  
-- `make debug` — Build with debug symbols  
-- `make release` — Build optimized version  
-
----
-
-## 🧰 Development Commands
-
+If you want to specify a custom installation path:
 ```bash
-./dev.sh run       # Quick build and run
-./dev.sh test      # Run quick tests
-./dev.sh watch     # Auto rebuild on file change
-./dev.sh debug     # Debug build
-./dev.sh perf      # Run performance test
+cmake --install . --prefix "path/to/install/dir"
 ```
 
+Installed locations (default):
+- **Headers:** `<prefix>/include/fastapi-cpp`
+- **Library:** `<prefix>/lib/fastapi-cpp.a` (or `.lib` on Windows)
+
 ---
 
-## 💡 Development Example (Quick Start)
+## 4. Linking in Another Project
 
+Once installed, FastAPI-CPP can be found automatically using `find_package()`.
+
+### Example `CMakeLists.txt`
+```cmake
+cmake_minimum_required(VERSION 3.15)
+project(MyApp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_package(FastAPI-CPP REQUIRED)
+
+add_executable(my_app simple_example.cpp)
+target_link_libraries(my_app FastAPI_CPP::fastapi-cpp)
+```
+### Example `simple_example.cpp`
 ```cpp
-#include "fastapi_cpp.h"
+#include <fastapi-cpp/server.hpp>
+#include <fastapi-cpp/macros.hpp>
 
 Router app;
 
@@ -155,7 +104,15 @@ int main() {
     FastApiCpp::run(app, "127.0.0.1", 8080);
 }
 ```
-
+A more comprehensive example can be found [examples](examples/simple_example.cpp)
+### Build and Run
+```powershell
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . --config Release
+./my_app.exe
+```
 ---
 
 ## 🙏 Acknowledgements
