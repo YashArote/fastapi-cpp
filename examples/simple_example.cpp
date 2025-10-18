@@ -3,8 +3,6 @@
 #include <fastapi-cpp/validation.hpp>
 #include <iostream>
 
-using json = nlohmann::json;
-
 Router app;
 
 struct UserModel : public Validatable
