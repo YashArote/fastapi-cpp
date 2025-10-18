@@ -1,52 +1,57 @@
-#include "server.hpp"
-#include "macros.hpp"
-#include "validation.hpp"
+#include <fastapi-cpp/server.hpp>
+#include <fastapi-cpp/macros.hpp>
+#include <fastapi-cpp/validation.hpp>
 #include <iostream>
 
 using json = nlohmann::json;
 
 Router app;
 
-struct UserModel : public Validatable {
+struct UserModel : public Validatable
+{
     std::string name;
     int age;
     MODEL(UserModel, name, age);
-    void validate() const override {
-        if (name.empty()) {
+    void validate() const override
+    {
+        if (name.empty())
+        {
             throw std::runtime_error("Name cannot be empty");
         }
-        if (age < 0) {
+        if (age < 0)
+        {
             throw std::runtime_error("Age must be non-negative");
         }
     }
 };
 
-Response get_hello() {
+Response get_hello()
+{
     return Response(json{
         {"message", "Hello from FastAPI-C++!"},
-        {"version", "1.0.0"}
-    });
+        {"version", "1.0.0"}});
 }
 
-Response get_user(int user_id) {
+Response get_user(int user_id)
+{
     return Response(json{
         {"id", user_id},
         {"name", "User " + std::to_string(user_id)},
-        {"message", "This is a sample user"}
-    });
+        {"message", "This is a sample user"}});
 }
 
-Response create_user(UserModel user) {
+Response create_user(UserModel user)
+{
     user.validate();
     return Response(json{
         {"id", 123},
         {"name", user.name},
         {"age", user.age},
-        {"message", "User created successfully"}
-    });
+        {"message", "User created successfully"}});
 }
 
-Response get_html() {
+Response get_html()
+{
     std::string html = R"(
 <!DOCTYPE html>
 <html>
@@ -60,7 +65,7 @@ Response get_html() {
     </style>
 </head>
 <body>
-    <h1>🚀 FastAPI-C++ Simple Example</h1>
+    <h1> FastAPI-C++ Simple Example</h1>
     <p>This is a minimal example showing basic FastAPI-C++ features.</p>
     
     <h2>Available Endpoints:</h2>
@@ -101,19 +106,20 @@ curl -X POST http://127.0.0.1:8080/users \
     return Response(html, "text/html");
 }
 
-int main() {
+int main()
+{
     std::cout << "🚀 Starting FastAPI-C++ Simple Example..." << std::endl;
-    
+
     APP_GET("/", get_hello);
     APP_GET("/users/{id}", get_user, Path<int>);
     APP_POST("/users", create_user, Body<UserModel>);
     APP_GET("/demo", get_html);
-    
+
     std::cout << "Registered " << app.get_route_count() << " routes" << std::endl;
     std::cout << "Server will be available at: http://127.0.0.1:8080" << std::endl;
     std::cout << "Try the demo page at: http://127.0.0.1:8080/demo" << std::endl;
-    
+
     FastApiCpp::run(app, "127.0.0.1", 8080);
-    
+
     return 0;
 }
