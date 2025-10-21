@@ -32,7 +32,7 @@ cd fastapi-cpp
 
 ## 2. Build the Library
 
-You can build the project in **Debug** or **Release** mode using CMake. This creates the lib and include directory.
+You can build the project in **Debug** or **Release** mode using CMake. This creates the library.
 
 
 ```powershell
